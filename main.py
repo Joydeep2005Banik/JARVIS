@@ -15,7 +15,7 @@ import psutil
 
 # Initializing a dictionary header for Wikipedia. You can add your GitHub repo and email ID.
 headers = {
-    'User-Agent': "JARVISBot/1.0 (https://github.com/Samael3040/JARVIS; joydeepbanik41@gmail.com)"
+    'User-Agent': "JARVISBot/1.0 (<your repository link>; <someone@example.com>)"
 }
 
 # Initializing Wikipedia API with English language settings and custom headers.
@@ -26,7 +26,7 @@ recognizer = sr.Recognizer()
 engine = pyttsx3.init()
 
 # API key for news service (please don't use this API key).
-news_api = "0bac390613644d4ca5de44887c3264ac"
+news_api = "<your API key here>"
 
 # Initializing GPT-Neo model and tokenizer for AI response generation.
 model_name = "EleutherAI/gpt-neo-125M"

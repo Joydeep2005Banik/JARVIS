@@ -10,6 +10,8 @@ import pygame
 import torch
 from transformers import GPTNeoForCausalLM, GPT2Tokenizer
 import wikipediaapi
+import signal
+import psutil
 
 # Initializing a dictionary header for Wikipedia. You can add your GitHub repo and email ID.
 headers = {
@@ -30,6 +32,13 @@ news_api = "0bac390613644d4ca5de44887c3264ac"
 model_name = "EleutherAI/gpt-neo-125M"
 tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 model = GPTNeoForCausalLM.from_pretrained(model_name, ignore_mismatched_sizes=True)
+
+#to close a certian process like youtube or linkedin
+def close_process_by_name(process_name):
+    for proc in psutil.process_iter():
+        # Check if the process name matches
+        if process_name.lower() in proc.name().lower():
+            proc.send_signal(signal.SIGTERM)  # Send termination signal
 
 # Function to fetch the summary of a topic from Wikipedia.
 def fetch_wikipedia_summary(query):
@@ -76,16 +85,58 @@ def speak(text):
 def processCommand(c):
     if "open google" in c.lower():
         webbrowser.open("https://google.com")
+    elif "close google" in c.lower():
+        try:
+            close_process_by_name("chrome")  # Replace 'chrome' with your default browser's process name if different.
+            speak("Google is now closed.")
+        except Exception as e:
+            speak("An error occurred while trying to close Google.")
+            print(f"Error: {e}")
     elif "open facebook" in c.lower():
         webbrowser.open("https://facebook.com")
+    elif "close facebook" in c.lower():
+        try:
+            close_process_by_name("chrome")  # Replace 'chrome' with your default browser's process name if different.
+            speak("Facebook is now closed.")
+        except Exception as e:
+            speak("An error occurred while trying to close Facebook.")
+            print(f"Error: {e}")
     elif "open youtube" in c.lower():
         webbrowser.open("https://youtube.com")
+    elif "close youtube" in c.lower():
+        try:
+            close_process_by_name("chrome")  # Replace 'chrome' with your default browser's process name if different.
+            speak("YouTube is now closed.")
+        except Exception as e:
+            speak("An error occurred while trying to close YouTube.")
+            print(f"Error: {e}")
     elif "open linkedin" in c.lower():
         webbrowser.open("https://linkedin.com")
+    elif "close linkedin" in c.lower():
+        try:
+            close_process_by_name("chrome")  # Replace 'chrome' with your default browser's process name if different.
+            speak("LinkedIn is now closed.")
+        except Exception as e:
+            speak("An error occurred while trying to close LinkedIn.")
+            print(f"Error: {e}")
     elif "open instagram" in c.lower():
         webbrowser.open("https://www.instagram.com/")
+    elif "close instagram" in c.lower():
+        try:
+            close_process_by_name("chrome")  # Replace 'chrome' with your default browser's process name if different.
+            speak("Instagram is now closed.")
+        except Exception as e:
+            speak("An error occurred while trying to close Instagram.")
+            print(f"Error: {e}")
     elif "open github" in c.lower():
         webbrowser.open("https://github.com/")
+    elif "close github" in c.lower():
+        try:
+            close_process_by_name("chrome")  # Replace 'chrome' with your default browser's process name if different.
+            speak("Github is now closed.")
+        except Exception as e:
+            speak("An error occurred while trying to close Github.")
+            print(f"Error: {e}")
     elif c.lower().startswith("play"):
         try:
             song = c.lower().split(" ", 1)[1]
@@ -117,6 +168,11 @@ def processCommand(c):
             print(f"Error: {e}")
     elif "what is" in c.lower():
         topic = c.lower().replace("what is", "").strip()
+        response = fetch_wikipedia_summary(topic)
+        speak(response)
+        print(response)
+    elif "who is" in c.lower():
+        topic = c.lower().replace("who is", "").strip()
         response = fetch_wikipedia_summary(topic)
         speak(response)
         print(response)
